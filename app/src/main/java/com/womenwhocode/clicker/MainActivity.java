@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     private TextView countTextView;
     private Button clickButton;
+    private boolean upVolume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +29,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
 
         countTextView = (TextView) findViewById(R.id.count);
-        clickButton = (Button) findViewById(R.id.click);
-        clickButton.setOnClickListener(this);
+        findViewById(R.id.click).setOnClickListener(this);
 
         doBindService();
     }
@@ -111,11 +112,52 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         doUnbindService();
     }
 
     @Override
     public void onClick(View v) {
+        int id = v.getId();
+
+        switch(id) {
+            case R.id.click:
+                click();
+                break;
+        }
+
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event)
+    {
+        if (event.getAction() == KeyEvent.ACTION_DOWN)
+        {
+            switch (event.getKeyCode())
+            {
+                case KeyEvent.KEYCODE_VOLUME_UP:
+                    // Volume up key detected
+                    // Do something
+                    if (upVolume) {
+                        upVolume = !upVolume;
+                        click();
+                    }
+                    return true;
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+                    // Volume down key detected
+                    // Do something
+                    if (!upVolume) {
+                        upVolume = !upVolume;
+                        click();
+                    }
+                    return true;
+            }
+        }
+
+        return super.dispatchKeyEvent(event);
+    }
+
+    public void click() {
         BusProvider.getInstance().post(new ClickEvent());
     }
 }
