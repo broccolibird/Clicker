@@ -11,7 +11,8 @@
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_main"
-            android:theme="@style/FullscreenTheme" >
+            android:theme="@style/FullscreenTheme"
+            android:launchMode= "singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

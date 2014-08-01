@@ -13,13 +13,17 @@
         android:text="@string/hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"/>
+        android:layout_marginTop="45dp"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/click"
         android:text="click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
         android:layout_below="@id/count"/>
+
 w
 </RelativeLayout>
