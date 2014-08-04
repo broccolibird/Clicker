@@ -20,7 +20,6 @@ import com.squareup.otto.Subscribe;
 public class MainActivity extends Activity implements View.OnClickListener{
 
     private TextView countTextView;
-    private Button clickButton;
     private boolean upVolume;
 
     @Override
