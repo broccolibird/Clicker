@@ -37,6 +37,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onResume() {
         super.onResume();
 
+        BusProvider.getInstance().post(new ForegroundEvent(true));
         BusProvider.getInstance().register(this);
     }
 
@@ -44,6 +45,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onPause() {
         super.onPause();
 
+        BusProvider.getInstance().post(new ForegroundEvent(false));
         BusProvider.getInstance().unregister(this);
     }
 
@@ -158,5 +160,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     public void click() {
         BusProvider.getInstance().post(new ClickEvent());
+    }
+
+    public class ForegroundEvent {
+        boolean foreground;
+
+        public ForegroundEvent(boolean foreground) {
+            this.foreground = foreground;
+        }
     }
 }

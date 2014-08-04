@@ -25,7 +25,7 @@ public class AccumulatorService extends Service {
     private final IBinder mBinder = new LocalBinder();
 
     private Handler handler;
-    private Runnable accumulatorRunnable;
+    private AccumulatorRunnable accumulatorRunnable;
 
     private static final int MILLISECONDS_BETWEEN_UPDATES_FOREGROUND = 1000;
     private static final int MILLISECONDS_BETWEEN_UPDATES_BACKGROUND = 10000;
@@ -114,6 +114,14 @@ public class AccumulatorService extends Service {
     public Count produceCount() {
         // Assuming 'lastAnswer' exists.
         return count;
+    }
+
+    @Subscribe
+    public void onForegroundStateChange(MainActivity.ForegroundEvent event){
+        if (event.foreground == true)
+            accumulatorRunnable.setMillisecondsBetweenUpdates(MILLISECONDS_BETWEEN_UPDATES_FOREGROUND);
+        else
+            accumulatorRunnable.setMillisecondsBetweenUpdates(MILLISECONDS_BETWEEN_UPDATES_BACKGROUND);
     }
 
     public void sendOutUpdate() {
